@@ -19,16 +19,17 @@
 
   <main>
     <h1>Redirect</h1>
-    <div class="card" id="box">
-      <p>sechack_rpi4_demo へ転送します…</p>
-      <p><a href="../../sechack_rpi4_demo/">../../sechack_rpi4_demo/</a></p>
-      <p class="small">自動で飛ばない場合はリンクをクリックしてください。</p>
+    <div class="card">
+      <p>自動で転送します…</p>
+      <p>転送できない場合は <a id="fallback" href="https://example.com/">https://example.com/</a> を開いてください。</p>
     </div>
   </main>
 
   <script>
-    const target = new URL("../../sechack_rpi4_demo/", location.href).href;
-    setTimeout(() => location.replace(target), 300);
+    const target = "https://example.com/";
+    const fallback = document.getElementById("fallback");
+    if (fallback) fallback.href = target;
+    location.replace(target);
   </script>
 </body>
 </html>
