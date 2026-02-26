@@ -19,6 +19,7 @@ export const profile = {
     "ハイパーバイザやコンパイラなど低レイヤーソフトウェア全般が好きです\n他にも基板作成などハードウェア寄りのこともやります",
   links: [
     { label: "GitHub", url: "https://github.com/Natsu-B" },
+    { label: "X", url: "https://x.com/0x00000000_" },
     { label: "Articles", url: "/articles/" },
   ] satisfies ProfileLink[],
   contact: {
@@ -66,4 +67,3 @@ export const projects: Project[] = [
     tags: ["C", "Compiler"],
   },
 ];
-
