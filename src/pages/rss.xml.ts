@@ -6,8 +6,8 @@ export async function GET(context: APIContext) {
   const articles = await getPublishedArticles();
 
   return rss({
-    title: "Natsu-B Articles",
-    description: "Natsu-B の技術記事RSSフィード",
+    title: "ほたるいか Articles",
+    description: "ほたるいか の技術記事RSSフィード",
     site: context.site ?? "https://natsu-b.github.io",
     items: articles.map((article) => ({
       title: article.data.title,
@@ -19,4 +19,3 @@ export async function GET(context: APIContext) {
     customData: "<language>ja-jp</language>",
   });
 }
-

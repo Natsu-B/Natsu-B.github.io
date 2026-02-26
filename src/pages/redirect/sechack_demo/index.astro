@@ -1,0 +1,22 @@
+---
+const target = "https://example.com/";
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content={`0; url=${target}`} />
+    <title>Redirecting...</title>
+    <link rel="canonical" href={target} />
+  </head>
+  <body>
+    <p>
+      Redirecting to
+      <a href={target}>{target}</a>
+    </p>
+    <script is:inline>
+      window.location.replace("https://example.com/");
+    </script>
+  </body>
+</html>

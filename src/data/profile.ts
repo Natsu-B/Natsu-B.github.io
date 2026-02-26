@@ -11,12 +11,12 @@ export interface Project {
 }
 
 export const profile = {
-  name: "Natsu B",
+  name: "ほたるいか",
   handle: "@hotaru",
   avatar: "/images/hotaru.jpg",
   bio: "低レイヤが好きです",
   longBio:
-    "ハイパーバイザやコンパイラなど低レイヤーソフトウェア全般が好きです 他にも基板作成などハードウェア寄りのこともやります",
+    "ハイパーバイザやコンパイラなど低レイヤーソフトウェア全般が好きです\n他にも基板作成などハードウェア寄りのこともやります",
   links: [
     { label: "GitHub", url: "https://github.com/Natsu-B" },
     { label: "Articles", url: "/articles/" },

@@ -5,8 +5,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <BaseLayout
-  title="Profile | Natsu-B"
-  description="Natsu-B の詳細プロフィール、興味分野、スキル、代表プロジェクト。"
+  title="Profile | ほたるいか"
+  description="ほたるいか の詳細プロフィール、興味分野、スキル、代表プロジェクト。"
 >
   <section class="panel px-6 py-6 sm:px-8 sm:py-8">
     <h1 class="text-2xl font-bold tracking-tight text-slate-800 sm:text-3xl">Profile</h1>
@@ -56,11 +56,10 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     <h2 class="text-xl font-semibold text-slate-800">Contact</h2>
     <ul class="mt-4 space-y-3 text-sm leading-7 text-slate-600 sm:text-base">
       <li>
-        GitHub: <a href={profile.contact.github}>{profile.contact.github}</a>
+        GitHub: <a href={profile.contact.github}>プロフィール</a>
       </li>
       <li>X: {profile.contact.x}</li>
       <li>Email: {profile.contact.emailMasked}</li>
     </ul>
   </section>
 </BaseLayout>
-
