@@ -10,6 +10,13 @@ export interface Project {
   tags: string[];
 }
 
+export interface Career {
+  period: string;
+  title: string;
+  summary: string;
+  url?: string;
+}
+
 export const profile = {
   name: "ほたるいか",
   handle: "@hotaru",
@@ -43,6 +50,30 @@ export const skills = [
   "QEMU / GDB",
   "KiCad",
 ] as const;
+
+export const careers: Career[] = [
+  {
+    period: "2025.5 - 2026.3",
+    title: "SecHack365 '25",
+    summary: "SecHack365 坂井ゼミに所属",
+  },
+  {
+    period: "2025.10 - ",
+    title: "サイボウズ・ラボユース",
+    summary: "サイボウズ・ラボユースにて、Raspberry Pi 5でのAMPの開発"
+  },
+  {
+    period: "2024夏",
+    title: "セキュリティキャンプ 2024 全国大会",
+    summary: "AArch64 UEFI環境向けのType-1 Hypervisorを実装。",
+    url: "https://trap.jp/post/2355/"
+  },
+  {
+    period: "2024.4 - ",
+    title: "東京科学大学",
+    summary: "東京科学大学 情報理工学院 情報工学系に在籍",
+  }
+];
 
 export const projects: Project[] = [
   {
