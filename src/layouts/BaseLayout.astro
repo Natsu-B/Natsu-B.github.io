@@ -1,0 +1,94 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+
+const {
+  title = "Natsu-B",
+  description = "Natsu-B のプロフィールと技術記事をまとめた個人サイト。",
+  canonical = new URL(
+    Astro.url.pathname,
+    Astro.site ?? "https://natsu-b.github.io",
+  ).toString(),
+} = Astro.props;
+
+const pathname = Astro.url.pathname;
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/profile", label: "Profile" },
+  { href: "/articles", label: "Articles" },
+  { href: "/tags", label: "Tags" },
+  { href: "/redirect", label: "Redirect" },
+];
+
+const isActive = (href: string): boolean =>
+  href === "/" ? pathname === "/" : pathname.startsWith(href);
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title="Natsu-B RSS" href="/rss.xml" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z8R2ETT72Z"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-Z8R2ETT72Z");
+    </script>
+  </head>
+  <body>
+    <header class="border-b border-slate-200/80 bg-white/80 backdrop-blur">
+      <div
+        class="mx-auto flex w-full max-w-4xl items-center justify-between gap-4 px-4 py-4 sm:px-6"
+      >
+        <a href="/" class="text-base font-semibold text-slate-800">Natsu-B</a>
+        <nav class="flex flex-wrap items-center gap-1">
+          {
+            navItems.map((item) => (
+              <a
+                href={item.href}
+                class:list={["nav-link", isActive(item.href) && "nav-link-active"]}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto w-full max-w-4xl px-4 py-8 sm:px-6 sm:py-10">
+      <slot />
+    </main>
+
+    <footer class="border-t border-slate-200/80 bg-white/70">
+      <div
+        class="mx-auto flex w-full max-w-4xl flex-wrap items-center justify-between gap-3 px-4 py-6 text-sm text-slate-500 sm:px-6"
+      >
+        <p>&copy; {new Date().getFullYear()} Natsu-B</p>
+        <div class="flex items-center gap-4">
+          <a href="/rss.xml">RSS</a>
+          <a href="/sitemap-index.xml">Sitemap</a>
+          <a href="https://github.com/Natsu-B">GitHub</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

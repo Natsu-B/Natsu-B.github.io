@@ -1,0 +1,34 @@
+---
+import ArticleCard from "../components/ArticleCard.astro";
+import ProfileHeader from "../components/ProfileHeader.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getPublishedArticles } from "../lib/articles";
+
+const latestArticles = (await getPublishedArticles()).slice(0, 5);
+---
+
+<BaseLayout
+  title="Home | Natsu-B"
+  description="Natsu-B のプロフィール概要と最新記事を掲載するホームページ。"
+>
+  <section>
+    <ProfileHeader />
+  </section>
+
+  <section class="mt-8 space-y-4">
+    <div class="flex items-center justify-between gap-3">
+      <h2 class="text-xl font-semibold tracking-tight text-slate-800">Latest Articles</h2>
+      <a href="/articles/" class="text-sm font-medium">すべての記事を見る</a>
+    </div>
+
+    <div class="space-y-4">
+      {latestArticles.map((article) => <ArticleCard article={article} />)}
+      {
+        latestArticles.length === 0 && (
+          <p class="panel p-5 text-sm text-slate-600">公開中の記事はまだありません。</p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
