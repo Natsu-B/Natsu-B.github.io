@@ -1,9 +1,21 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { projects, slideDecks } from "../../data/profile";
-import { getCombinedTagSummaries, getPublishedArticles } from "../../lib/articles";
+import {
+  getCombinedTagSummaries,
+  getPublishedArticles,
+  hasStringTag,
+  hasTag,
+} from "../../lib/articles";
 
-const tags = getCombinedTagSummaries(await getPublishedArticles(), projects, slideDecks);
+const articles = await getPublishedArticles();
+const tags = getCombinedTagSummaries(articles, projects, slideDecks);
+const tagCards = tags.map((tag) => ({
+  ...tag,
+  articles: articles.filter((article) => hasTag(article, tag.value)),
+  projects: projects.filter((project) => hasStringTag(project.tags, tag.value)),
+  slides: slideDecks.filter((slide) => hasStringTag(slide.tags, tag.value)),
+}));
 ---
 
 <BaseLayout title="Tags | ほたるいか" description="全タグ一覧と関連コンテンツ件数。">
@@ -14,19 +26,68 @@ const tags = getCombinedTagSummaries(await getPublishedArticles(), projects, sli
     </p>
   </section>
 
-  <section class="mt-6 grid gap-3 sm:grid-cols-2">
+  <section class="mt-6 grid gap-4 sm:grid-cols-2">
     {
-      tags.map((tag) => (
-        <a href={`/tags/${tag.slug}/`} class="panel panel-hover block px-5 py-4">
-          <div class="flex items-center justify-between gap-2">
-            <p class="font-semibold text-slate-700">#{tag.label}</p>
+      tagCards.map((tag) => (
+        <article class="panel panel-hover px-5 py-4">
+          <div class="flex flex-wrap items-start justify-between gap-2">
+            <a href={`/tags/${tag.slug}/`} class="font-semibold text-slate-700">#{tag.label}</a>
             <p class="text-sm text-slate-500">{tag.count}件</p>
           </div>
-        </a>
+          <div class="mt-3 flex flex-wrap gap-2 text-xs text-slate-500">
+            <span class="rounded-full border border-slate-200 bg-slate-50 px-2 py-1">
+              Articles {tag.articles.length}
+            </span>
+            <span class="rounded-full border border-slate-200 bg-slate-50 px-2 py-1">
+              Projects {tag.projects.length}
+            </span>
+            <span class="rounded-full border border-slate-200 bg-slate-50 px-2 py-1">
+              Slides {tag.slides.length}
+            </span>
+          </div>
+          <div class="mt-4 space-y-3 text-sm leading-6 text-slate-600">
+            {tag.articles.length > 0 && (
+              <div>
+                <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Articles</p>
+                <ul class="mt-1 space-y-1">
+                  {tag.articles.map((article) => (
+                    <li>
+                      <a href={`/articles/${article.id}/`}>{article.data.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {tag.projects.length > 0 && (
+              <div>
+                <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Projects</p>
+                <ul class="mt-1 space-y-1">
+                  {tag.projects.map((project) => (
+                    <li>
+                      <a href={project.url}>{project.name}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {tag.slides.length > 0 && (
+              <div>
+                <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Slides</p>
+                <ul class="mt-1 space-y-1">
+                  {tag.slides.map((slide) => (
+                    <li>
+                      <a href={`/slides/${slide.slug}/`}>{slide.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </article>
       ))
     }
     {
-      tags.length === 0 && (
+      tagCards.length === 0 && (
         <p class="panel col-span-full p-5 text-sm text-slate-600">
           タグがまだありません。
         </p>
