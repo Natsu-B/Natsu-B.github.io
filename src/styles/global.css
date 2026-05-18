@@ -202,3 +202,13 @@ a:hover {
   color: #516987;
 }
 
+.slide-embed {
+  overflow: hidden;
+}
+
+.slide-embed iframe {
+  display: block;
+  width: 100%;
+  min-height: 520px;
+  border: 0;
+}

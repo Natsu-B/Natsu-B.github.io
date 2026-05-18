@@ -1,0 +1,72 @@
+---
+import TagChips from "../../components/TagChips.astro";
+import { slideDecks } from "../../data/profile";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return slideDecks.map((slide) => ({
+    params: { slug: slide.slug },
+    props: { slide },
+  }));
+}
+
+const { slide } = Astro.props;
+const embedUrl = slide.embedUrl ?? (slide.format === "pdf" ? slide.url : undefined);
+---
+
+<BaseLayout
+  title={`${slide.title} | Slides | ほたるいか`}
+  description={slide.description}
+>
+  <article class="panel px-6 py-6 sm:px-8 sm:py-8">
+    <a href="/slides/" class="text-sm font-medium">Slides に戻る</a>
+
+    <header class="mt-5">
+      <div class="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">
+            {slide.date}
+            {slide.event ? ` / ${slide.event}` : ""}
+          </p>
+          <h1 class="mt-2 text-2xl font-bold tracking-tight text-slate-800 sm:text-3xl">
+            {slide.title}
+          </h1>
+        </div>
+        <span class="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium uppercase text-slate-500">
+          {slide.format}
+        </span>
+      </div>
+      <p class="mt-4 text-sm leading-7 text-slate-600 sm:text-base">{slide.description}</p>
+      {slide.tags && slide.tags.length > 0 && (
+        <TagChips
+          items={slide.tags.map((tag) => ({ label: tag }))}
+          className="mt-4"
+        />
+      )}
+      <div class="mt-5 flex flex-wrap items-center gap-3">
+        <a href={slide.url} class="outline-link">元資料を開く</a>
+      </div>
+    </header>
+
+    <div class="mt-6">
+      {
+        slide.embedHtml ? (
+          <div
+            class="slide-embed rounded-xl border border-slate-200 bg-slate-50"
+            set:html={slide.embedHtml}
+          />
+        ) : embedUrl ? (
+          <iframe
+            src={embedUrl}
+            title={slide.title}
+            class="h-[72vh] min-h-[520px] w-full rounded-xl border border-slate-200 bg-slate-50"
+          />
+        ) : (
+          <div class="rounded-xl border border-slate-200 bg-slate-50/70 p-5 text-sm leading-7 text-slate-600">
+            この形式はページ内プレビューに対応していません。元資料のリンクから開いてください。
+          </div>
+        )
+      }
+    </div>
+  </article>
+</BaseLayout>

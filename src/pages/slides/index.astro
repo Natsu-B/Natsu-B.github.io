@@ -1,0 +1,64 @@
+---
+import TagChips from "../../components/TagChips.astro";
+import { slideDecks } from "../../data/profile";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const sortedSlideDecks = [...slideDecks].sort((a, b) => b.date.localeCompare(a.date));
+---
+
+<BaseLayout
+  title="Slides | ほたるいか"
+  description="ほたるいか の発表スライド一覧。PDF、PPTX、Speaker Deck へのリンクや埋め込みを掲載しています。"
+>
+  <section class="panel px-6 py-6 sm:px-8 sm:py-8">
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <h1 class="text-2xl font-bold tracking-tight text-slate-800">Slides</h1>
+        <p class="mt-2 text-sm leading-7 text-slate-600 sm:text-base">
+          発表資料を日時、イベント、一行説明とあわせて掲載しています。
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-6 space-y-4">
+      {
+        sortedSlideDecks.map((slide) => (
+          <article class="rounded-xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
+            <div class="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p class="text-xs font-medium uppercase tracking-wide text-slate-500">
+                  {slide.date}
+                  {slide.event ? ` / ${slide.event}` : ""}
+                </p>
+                <h2 class="mt-1 text-lg font-semibold text-slate-800">
+                  <a href={`/slides/${slide.slug}/`}>{slide.title}</a>
+                </h2>
+              </div>
+              <span class="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium uppercase text-slate-500">
+                {slide.format}
+              </span>
+            </div>
+            <p class="mt-3 text-sm leading-7 text-slate-600 sm:text-base">{slide.description}</p>
+            <div class="mt-4 flex flex-wrap items-center gap-3">
+              <a href={`/slides/${slide.slug}/`} class="outline-link">詳細を見る</a>
+              <a href={slide.url} class="outline-link">元資料を開く</a>
+            </div>
+            {slide.tags && slide.tags.length > 0 && (
+              <TagChips
+                items={slide.tags.map((tag) => ({ label: tag }))}
+                className="mt-4"
+              />
+            )}
+          </article>
+        ))
+      }
+      {
+        sortedSlideDecks.length === 0 && (
+          <p class="rounded-xl border border-slate-200 bg-slate-50/70 p-4 text-sm leading-7 text-slate-600">
+            掲載中の発表スライドはまだありません。
+          </p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
