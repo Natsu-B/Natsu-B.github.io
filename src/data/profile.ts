@@ -170,6 +170,12 @@ export const projects: Project[] = [
     tags: ["Rust", "AArch64", "Hypervisor", "UEFI"],
   },
   {
+    name: "linker",
+    description: "newlibを標準ライブラリとして静的リンクできるリンカ",
+    url: "https://github.com/Natsu-B/my_linker",
+    tags: ["Rust", "Linker", "newlib"],
+  },
+  {
     name: "c_compiler",
     description:
       "プリプロセッサや中間言語を実装したCコンパイラ",
