@@ -3,6 +3,7 @@ import ProfileHeader from "../components/ProfileHeader.astro";
 import TagChips from "../components/TagChips.astro";
 import { careers, interests, profile, projects, skills, slideDecks } from "../data/profile";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { encodeTag } from "../lib/articles";
 
 const latestSlideDecks = [...slideDecks]
   .sort((a, b) => b.date.localeCompare(a.date))
@@ -74,7 +75,10 @@ const latestSlideDecks = [...slideDecks]
             <p class="mt-2 text-sm leading-7 text-slate-600 sm:text-base">{slide.description}</p>
             {slide.tags && slide.tags.length > 0 && (
               <TagChips
-                items={slide.tags.map((tag) => ({ label: tag }))}
+                items={slide.tags.map((tag) => ({
+                  label: tag,
+                  href: `/tags/${encodeTag(tag)}/`,
+                }))}
                 className="mt-3"
               />
             )}
@@ -98,14 +102,19 @@ const latestSlideDecks = [...slideDecks]
         projects.map((project) => (
           <article class="rounded-xl border border-slate-200 bg-slate-50/70 p-4 sm:p-5">
             <div class="flex flex-wrap items-center justify-between gap-2">
-              <h3 class="text-base font-semibold text-slate-800">{project.name}</h3>
+              <h3 class="text-base font-semibold text-slate-800">
+                <a href={project.url}>{project.name}</a>
+              </h3>
               <a href={project.url} class="text-sm font-medium">
                 View
               </a>
             </div>
             <p class="mt-2 text-sm leading-7 text-slate-600 sm:text-base">{project.description}</p>
             <TagChips
-              items={project.tags.map((tag) => ({ label: tag }))}
+              items={project.tags.map((tag) => ({
+                label: tag,
+                href: `/tags/${encodeTag(tag)}/`,
+              }))}
               className="mt-3"
             />
           </article>

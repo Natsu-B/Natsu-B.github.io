@@ -2,6 +2,7 @@
 import TagChips from "../../components/TagChips.astro";
 import { slideDecks } from "../../data/profile";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { encodeTag } from "../../lib/articles";
 
 export function getStaticPaths() {
   return slideDecks.map((slide) => ({
@@ -39,7 +40,10 @@ const embedUrl = slide.embedUrl ?? (slide.format === "pdf" ? slide.url : undefin
       <p class="mt-4 text-sm leading-7 text-slate-600 sm:text-base">{slide.description}</p>
       {slide.tags && slide.tags.length > 0 && (
         <TagChips
-          items={slide.tags.map((tag) => ({ label: tag }))}
+          items={slide.tags.map((tag) => ({
+            label: tag,
+            href: `/tags/${encodeTag(tag)}/`,
+          }))}
           className="mt-4"
         />
       )}

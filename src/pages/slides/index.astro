@@ -2,6 +2,7 @@
 import TagChips from "../../components/TagChips.astro";
 import { slideDecks } from "../../data/profile";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { encodeTag } from "../../lib/articles";
 
 const sortedSlideDecks = [...slideDecks].sort((a, b) => b.date.localeCompare(a.date));
 ---
@@ -45,7 +46,10 @@ const sortedSlideDecks = [...slideDecks].sort((a, b) => b.date.localeCompare(a.d
             </div>
             {slide.tags && slide.tags.length > 0 && (
               <TagChips
-                items={slide.tags.map((tag) => ({ label: tag }))}
+                items={slide.tags.map((tag) => ({
+                  label: tag,
+                  href: `/tags/${encodeTag(tag)}/`,
+                }))}
                 className="mt-4"
               />
             )}

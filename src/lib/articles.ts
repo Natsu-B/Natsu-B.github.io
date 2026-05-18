@@ -1,6 +1,8 @@
 import { getCollection, type CollectionEntry } from "astro:content";
+import type { Project, SlideDeck } from "../data/profile";
 
 export type Article = CollectionEntry<"articles">;
+export type TaggableItem = Article | Project | SlideDeck;
 
 export interface TagSummary {
   label: string;
@@ -35,10 +37,17 @@ export async function getPublishedArticles(): Promise<Article[]> {
 }
 
 export function getTagSummaries(articles: Article[]): TagSummary[] {
+  return getTagSummariesFromItems(articles, (article) => article.data.tags);
+}
+
+export function getTagSummariesFromItems<T>(
+  items: T[],
+  getTags: (item: T) => readonly string[] | undefined,
+): TagSummary[] {
   const map = new Map<string, TagSummary>();
 
-  for (const article of articles) {
-    for (const rawTag of article.data.tags) {
+  for (const item of items) {
+    for (const rawTag of getTags(item) ?? []) {
       const normalized = normalizeTag(rawTag);
       if (!normalized) continue;
 
@@ -62,8 +71,26 @@ export function getTagSummaries(articles: Article[]): TagSummary[] {
   );
 }
 
+export function getCombinedTagSummaries(
+  articles: Article[],
+  projects: Project[],
+  slides: SlideDeck[] = [],
+): TagSummary[] {
+  return getTagSummariesFromItems(
+    [...articles, ...projects, ...slides] satisfies TaggableItem[],
+    (item) => {
+      if ("data" in item) return item.data.tags;
+      return item.tags;
+    },
+  );
+}
+
 export function hasTag(article: Article, tag: string): boolean {
   const normalized = normalizeTag(tag);
   return article.data.tags.some((entryTag) => normalizeTag(entryTag) === normalized);
 }
 
+export function hasStringTag(tags: readonly string[] | undefined, tag: string): boolean {
+  const normalized = normalizeTag(tag);
+  return (tags ?? []).some((entryTag) => normalizeTag(entryTag) === normalized);
+}
