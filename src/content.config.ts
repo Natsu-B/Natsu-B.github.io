@@ -10,8 +10,9 @@ const articles = defineCollection({
     tags: z.array(z.string()),
     draft: z.boolean(),
     lang: z.enum(["ja", "en"]).optional(),
+    externalUrl: z.string().url().optional(),
+    source: z.string().optional(),
   }),
 });
 
 export const collections = { articles };
-
