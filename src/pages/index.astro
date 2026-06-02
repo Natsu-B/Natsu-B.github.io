@@ -1,13 +1,10 @@
 ---
 import ArticleCard from "../components/ArticleCard.astro";
-import ExternalArticleCard from "../components/ExternalArticleCard.astro";
 import ProfileHeader from "../components/ProfileHeader.astro";
-import { sortedExternalArticles } from "../data/externalArticles";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getPublishedArticles } from "../lib/articles";
 
 const latestArticles = (await getPublishedArticles()).slice(0, 5);
-const latestExternalArticles = sortedExternalArticles.slice(0, 3);
 ---
 
 <BaseLayout
@@ -29,22 +26,6 @@ const latestExternalArticles = sortedExternalArticles.slice(0, 3);
       {
         latestArticles.length === 0 && (
           <p class="panel p-5 text-sm text-slate-600">公開中の記事はまだありません。</p>
-        )
-      }
-    </div>
-  </section>
-
-  <section class="mt-8 space-y-4">
-    <div class="flex items-center justify-between gap-3">
-      <h2 class="text-xl font-semibold tracking-tight text-slate-800">External Articles</h2>
-      <a href="/external-articles/" class="text-sm font-medium">すべての外部記事を見る</a>
-    </div>
-
-    <div class="space-y-4">
-      {latestExternalArticles.map((article) => <ExternalArticleCard article={article} />)}
-      {
-        latestExternalArticles.length === 0 && (
-          <p class="panel p-5 text-sm text-slate-600">掲載中の外部記事はまだありません。</p>
         )
       }
     </div>
