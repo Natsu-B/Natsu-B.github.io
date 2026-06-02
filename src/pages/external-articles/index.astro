@@ -1,0 +1,40 @@
+---
+import ExternalArticleCard from "../../components/ExternalArticleCard.astro";
+import TagChips from "../../components/TagChips.astro";
+import { sortedExternalArticles } from "../../data/externalArticles";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getTagSummariesFromItems } from "../../lib/articles";
+
+const tags = getTagSummariesFromItems(sortedExternalArticles, (article) => article.tags);
+---
+
+<BaseLayout
+  title="External Articles | ほたるいか"
+  description="別サイトで公開した記事へのリンク集。URL、概要、タグから探せます。"
+>
+  <section class="panel px-6 py-6 sm:px-8 sm:py-8">
+    <h1 class="text-2xl font-bold tracking-tight text-slate-800 sm:text-3xl">External Articles</h1>
+    <p class="mt-3 text-sm leading-7 text-slate-600 sm:text-base">
+      別サイトで公開した記事を、概要とタグ付きでまとめています。
+    </p>
+    {tags.length > 0 && (
+      <TagChips
+        items={tags.map((tag) => ({
+          label: tag.label,
+          href: `/tags/${tag.slug}/`,
+          count: tag.count,
+        }))}
+        className="mt-4"
+      />
+    )}
+  </section>
+
+  <section class="mt-6 space-y-4">
+    {sortedExternalArticles.map((article) => <ExternalArticleCard article={article} />)}
+    {
+      sortedExternalArticles.length === 0 && (
+        <p class="panel p-5 text-sm text-slate-600">掲載中の外部記事はまだありません。</p>
+      )
+    }
+  </section>
+</BaseLayout>
