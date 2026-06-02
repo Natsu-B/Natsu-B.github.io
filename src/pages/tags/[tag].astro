@@ -1,8 +1,6 @@
 ---
 import ArticleCard from "../../components/ArticleCard.astro";
-import ExternalArticleCard from "../../components/ExternalArticleCard.astro";
 import TagChips from "../../components/TagChips.astro";
-import { sortedExternalArticles, type ExternalArticle } from "../../data/externalArticles";
 import { projects, slideDecks, type Project, type SlideDeck } from "../../data/profile";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import {
@@ -20,12 +18,11 @@ interface Props {
   articles: Article[];
   projects: Project[];
   slides: SlideDeck[];
-  externalArticles: ExternalArticle[];
 }
 
 export async function getStaticPaths() {
   const articles = await getPublishedArticles();
-  const tags = getCombinedTagSummaries(articles, projects, slideDecks, sortedExternalArticles);
+  const tags = getCombinedTagSummaries(articles, projects, slideDecks);
 
   return tags.map((tag) => ({
     params: { tag: tag.slug },
@@ -34,12 +31,11 @@ export async function getStaticPaths() {
       articles: articles.filter((article) => hasTag(article, tag.value)),
       projects: projects.filter((project) => hasStringTag(project.tags, tag.value)),
       slides: slideDecks.filter((slide) => hasStringTag(slide.tags, tag.value)),
-      externalArticles: sortedExternalArticles.filter((article) => hasStringTag(article.tags, tag.value)),
     },
   }));
 }
 
-const { tag, articles, projects: tagProjects, slides, externalArticles } = Astro.props as Props;
+const { tag, articles, projects: tagProjects, slides } = Astro.props as Props;
 ---
 
 <BaseLayout
@@ -59,16 +55,6 @@ const { tag, articles, projects: tagProjects, slides, externalArticles } = Astro
     {
       articles.length === 0 && (
         <p class="panel p-5 text-sm text-slate-600">このタグの記事はまだありません。</p>
-      )
-    }
-  </section>
-
-  <section class="mt-8 space-y-4">
-    <h2 class="text-xl font-semibold tracking-tight text-slate-800">External Articles</h2>
-    {externalArticles.map((article) => <ExternalArticleCard article={article} />)}
-    {
-      externalArticles.length === 0 && (
-        <p class="panel p-5 text-sm text-slate-600">このタグの外部記事はまだありません。</p>
       )
     }
   </section>
