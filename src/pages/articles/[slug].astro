@@ -10,16 +10,24 @@ interface Props {
   next?: CollectionEntry<"articles">;
 }
 
+const getArticleHref = (article: CollectionEntry<"articles">): string =>
+  article.data.externalUrl ?? `/articles/${article.id}/`;
+
 export async function getStaticPaths() {
-  const articles = await getPublishedArticles();
-  return articles.map((article, index) => ({
-    params: { slug: article.id },
-    props: {
-      article,
-      previous: articles[index - 1],
-      next: articles[index + 1],
-    },
-  }));
+  const articles = (await getPublishedArticles()).filter((article) => !article.data.externalUrl);
+  const allArticles = await getPublishedArticles();
+
+  return articles.map((article) => {
+    const index = allArticles.findIndex((entry) => entry.id === article.id);
+    return {
+      params: { slug: article.id },
+      props: {
+        article,
+        previous: allArticles[index - 1],
+        next: allArticles[index + 1],
+      },
+    };
+  });
 }
 
 const { article, previous, next } = Astro.props as Props;
@@ -59,7 +67,7 @@ const tagItems = article.data.tags.map((tag) => ({
   <nav class="mt-6 grid gap-4 sm:grid-cols-2">
     {
       previous ? (
-        <a href={`/articles/${previous.id}/`} class="panel panel-hover block p-5">
+        <a href={getArticleHref(previous)} class="panel panel-hover block p-5">
           <p class="text-xs uppercase tracking-wide text-slate-500">Newer</p>
           <p class="mt-2 text-sm font-semibold text-slate-700">{previous.data.title}</p>
         </a>
@@ -70,7 +78,7 @@ const tagItems = article.data.tags.map((tag) => ({
 
     {
       next ? (
-        <a href={`/articles/${next.id}/`} class="panel panel-hover block p-5">
+        <a href={getArticleHref(next)} class="panel panel-hover block p-5">
           <p class="text-xs uppercase tracking-wide text-slate-500">Older</p>
           <p class="mt-2 text-sm font-semibold text-slate-700">{next.data.title}</p>
         </a>
