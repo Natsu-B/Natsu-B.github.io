@@ -1,8 +1,9 @@
 import { getCollection, type CollectionEntry } from "astro:content";
+import type { ExternalArticle } from "../data/externalArticles";
 import type { Project, SlideDeck } from "../data/profile";
 
 export type Article = CollectionEntry<"articles">;
-export type TaggableItem = Article | Project | SlideDeck;
+export type TaggableItem = Article | Project | SlideDeck | ExternalArticle;
 
 export interface TagSummary {
   label: string;
@@ -75,9 +76,10 @@ export function getCombinedTagSummaries(
   articles: Article[],
   projects: Project[],
   slides: SlideDeck[] = [],
+  externalArticles: ExternalArticle[] = [],
 ): TagSummary[] {
   return getTagSummariesFromItems(
-    [...articles, ...projects, ...slides] satisfies TaggableItem[],
+    [...articles, ...projects, ...slides, ...externalArticles] satisfies TaggableItem[],
     (item) => {
       if ("data" in item) return item.data.tags;
       return item.tags;
