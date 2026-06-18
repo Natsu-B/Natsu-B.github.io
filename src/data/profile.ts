@@ -10,6 +10,30 @@ export interface Project {
   tags: string[];
 }
 
+export interface BoardSpec {
+  label: string;
+  value: string;
+}
+
+export interface HardwareBoard {
+  slug: string;
+  name: string;
+  summary: string;
+  description: string;
+  stage?: string;
+  period?: string;
+  image?: {
+    src: string;
+    alt: string;
+  };
+  repositoryUrl?: string;
+  links: ProfileLink[];
+  tags: string[];
+  specs: BoardSpec[];
+  highlights: string[];
+  notes?: string[];
+}
+
 export interface Career {
   period: string;
   title: string;
@@ -152,6 +176,40 @@ export const slideDecks: SlideDeck[] = [
     embedHtml: '<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/0bd8810b22a7469bb2990eb232377037" title="デバッグ支援ハイパーバイザとRaspberry pi 5でのAMP" allowfullscreen="true" allow="web-share" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe>',
     tags: ["Raspberry Pi 5", "Hypervisor", "Debugging"],
   }
+];
+
+export const hardwareBoards: HardwareBoard[] = [
+  {
+    slug: "avi-99l-mission-board",
+    name: "Avi_99L_MissionBoard",
+    summary:
+      "99Lロケット向けのミッション基板。離床後の機体ロール角速度取得、動翼制御、飛行終盤のパラシュート機構開放を担う。",
+    description:
+      "ESP32-S3を中心に、IMU、CAN、I2C/CAN物理層変換、microSD、2系統のモータドライバ、5V保護railを載せたミッション基板。KiCadで回路・PCBを設計し、Rust firmware 側では board resources と device initialization を明示的に分割して扱う。",
+    stage: "PCB / Firmware",
+    period: "2026",
+    repositoryUrl: "https://github.com/CREATE-ROCKET/Avi_99L_MissionBoard",
+    links: [
+      { label: "Repository", url: "https://github.com/CREATE-ROCKET/Avi_99L_MissionBoard" },
+    ],
+    tags: ["KiCad", "PCB", "Rust", "ESP32-S3", "Rocket"],
+    specs: [
+      { label: "MCU", value: "ESP32-S3-WROOM-1" },
+      { label: "IMU", value: "ICM-42688-P" },
+      { label: "Interface", value: "CAN / I2C / microSD / USB-C" },
+      { label: "Motor Driver", value: "TB67H450FNG x2" },
+      { label: "Power", value: "TPS2121 / LM66100 / TCKE800" },
+      { label: "Firmware", value: "Rust / esp-hal" },
+    ],
+    highlights: [
+      "動翼・パラシュート機構を制御するため、モータ、エンコーダ、IMU、SD、CANを用途別resourceとして分割。",
+      "5V保護railを型状態で扱い、rail off時のdevice使用をcompile errorに寄せる設計。",
+      "KiCad上のラベル名と実GPIO接続がずれやすい箇所をREADMEで明文化し、firmware側のGPIO定義を正にする運用。",
+    ],
+    notes: [
+      "実物写真やKiCad 3D Viewerの画像を追加したら、image.src と image.alt を設定するだけで一覧・詳細ページの両方に反映される。",
+    ],
+  },
 ];
 
 export const projects: Project[] = [
