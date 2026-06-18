@@ -1,13 +1,16 @@
 ---
+import BoardCard from "../components/BoardCard.astro";
 import ProfileHeader from "../components/ProfileHeader.astro";
 import TagChips from "../components/TagChips.astro";
-import { careers, interests, profile, projects, skills, slideDecks } from "../data/profile";
+import { careers, hardwareBoards, interests, profile, projects, skills, slideDecks } from "../data/profile";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { encodeTag } from "../lib/articles";
 
 const latestSlideDecks = [...slideDecks]
   .sort((a, b) => b.date.localeCompare(a.date))
   .slice(0, 3);
+
+const featuredHardwareBoards = hardwareBoards.slice(0, 2);
 ---
 
 <BaseLayout
@@ -94,6 +97,24 @@ const latestSlideDecks = [...slideDecks]
       }
     </div>
   </section>
+
+  {featuredHardwareBoards.length > 0 && (
+    <section class="mt-6 panel px-6 py-6 sm:px-8 sm:py-8">
+      <div class="flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h2 class="text-xl font-semibold text-slate-800">Hardware</h2>
+          <p class="mt-2 text-sm leading-7 text-slate-600 sm:text-base">
+            KiCadで設計した基板や、基板に対応するfirmwareをまとめています。
+          </p>
+        </div>
+        <a href="/boards/" class="text-sm font-medium">すべての基板を見る</a>
+      </div>
+
+      <div class="mt-5 space-y-4">
+        {featuredHardwareBoards.map((board) => <BoardCard board={board} compact />)}
+      </div>
+    </section>
+  )}
 
   <section class="mt-6 panel px-6 py-6 sm:px-8 sm:py-8">
     <h2 class="text-xl font-semibold text-slate-800">Projects</h2>
