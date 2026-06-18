@@ -2,7 +2,6 @@
 import BoardVisual from "./BoardVisual.astro";
 import TagChips from "./TagChips.astro";
 import type { HardwareBoard } from "../data/profile";
-import { encodeTag } from "../lib/articles";
 
 interface Props {
   board: HardwareBoard;
@@ -59,7 +58,6 @@ const detailHref = `/boards/${board.slug}/`;
         <TagChips
           items={board.tags.map((tag) => ({
             label: tag,
-            href: `/tags/${encodeTag(tag)}/`,
           }))}
           className="mt-4"
         />
