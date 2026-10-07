@@ -77,7 +77,8 @@ export const careers: Career[] = [
   {
     period: "2025.5 - 2026.3",
     title: "SecHack365 '25",
-    summary: "SecHack365 坂井ゼミに所属",
+    summary: "坂井ゼミで、ソフトウェアのみで実機デバッグを可能にするハイパーバイザ型OSデバッガ「HyprProbe」を開発。GDB / VS Code連携、メモリアクセス監視、異常IRQ・例外処理失敗の検知などを実装し、QEMUとRaspberry Pi 4で動作を確認。",
+    url: "https://sechack365.nict.go.jp/achievement/2025/pdf/30Ss.pdf",
   },
   {
     period: "2025.10 - 2026.9",
