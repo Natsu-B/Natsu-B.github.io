@@ -120,6 +120,17 @@ export const slideDecks: SlideDeck[] = [
   },
   */
   {
+    slug: "raspberry-pi-5-rp1-custom-program",
+    title: "Raspberry Pi 5のRP1でも自作プログラムをうごかしたい！",
+    date: "2026-08-22",
+    event: "kernel/VM 東京 No19",
+    description: "Raspberry Pi 5のRP1で自作ファームウェアを動かし、BCM2712側のLinuxと共存させるためのブート、PCIe endpoint初期化、リソース共有についての発表",
+    format: "speakerdeck",
+    url: "https://speakerdeck.com/hotaru_jp/raspberry-pi-5-no-rp1-demo-jisaku-puroguramu-o-ugokashitai",
+    embedHtml: '<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/11890bfc09f4469aa25936a59dcc8518" title="Raspberry Pi 5のRP1でも自作プログラムをうごかしたい！" allowfullscreen="true" allow="web-share" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 315;" data-ratio="1.7777777777777777"></iframe>',
+    tags: ["Raspberry Pi 5", "RP1", "PCIe", "Firmware", "Linux"],
+  },
+  {
     slug: "create-linker",
     title: "リンカを1週間で作ってみた",
     date: "2026-04-17",
