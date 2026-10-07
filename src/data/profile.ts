@@ -80,7 +80,7 @@ export const careers: Career[] = [
     summary: "SecHack365 坂井ゼミに所属",
   },
   {
-    period: "2025.10 - ",
+    period: "2025.10 - 2026.9",
     title: "サイボウズ・ラボユース",
     summary: "サイボウズ・ラボユースにて、Raspberry Pi 5でのAMPの開発"
   },
