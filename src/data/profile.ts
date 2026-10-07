@@ -85,6 +85,12 @@ export const careers: Career[] = [
     summary: "サイボウズ・ラボユースにて、Raspberry Pi 5でのAMPの開発"
   },
   {
+    period: "2024.4 - 2026.8",
+    title: "ロケットサークル CREATE（99L）",
+    summary: "99Lの動翼制御系を担当。動翼制御用の統合基板の設計・開発、機体側ソフトウェア、地上側ファームウェアまで一貫して開発。",
+    url: "https://youtu.be/iyHNUBBM54Y?si=uF9rUiykg44XpC5p",
+  },
+  {
     period: "2024夏",
     title: "セキュリティキャンプ 2024 全国大会",
     summary: "AArch64 UEFI環境向けのType-1 Hypervisorを実装。",
