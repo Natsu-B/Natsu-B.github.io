@@ -69,6 +69,12 @@ export const skills = [
 
 export const careers: Career[] = [
   {
+    period: "2026.8 - 2026.9",
+    title: "ソニーグループ 職場密着インターン",
+    summary: "System Architecture & Software [R&D] コースの組み込みLinux領域で、Linuxカーネル開発に4週間取り組んだ。",
+    url: "https://www.sony.com/ja/SonyInfo/Jobs/sgc-recruit/newgrads/internship/long-internship/#hw_03",
+  },
+  {
     period: "2025.5 - 2026.3",
     title: "SecHack365 '25",
     summary: "SecHack365 坂井ゼミに所属",
