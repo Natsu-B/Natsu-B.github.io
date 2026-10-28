@@ -25,7 +25,7 @@ export async function getStaticPaths() {
   const tags = getCombinedTagSummaries(articles, projects, slideDecks);
 
   return tags.map((tag) => ({
-    params: { tag: tag.slug },
+    params: { tag: tag.value },
     props: {
       tag,
       articles: articles.filter((article) => hasTag(article, tag.value)),
