@@ -194,9 +194,9 @@ export const projects: Project[] = [
     tags: ["Rust", "AArch64", "Hypervisor", "UEFI"],
   },
   {
-    name: "linker",
+    name: "reld",
     description: "newlibを標準ライブラリとして静的リンクできるリンカ",
-    url: "https://github.com/Natsu-B/my_linker",
+    url: "https://github.com/Natsu-B/reld",
     tags: ["Rust", "Linker", "newlib"],
   },
   {
