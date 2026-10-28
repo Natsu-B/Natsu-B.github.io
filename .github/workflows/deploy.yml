@@ -27,6 +27,7 @@ jobs:
         uses: withastro/action@v5
         with:
           path: .
+          node-version: 24
           package-manager: npm
 
   deploy:
