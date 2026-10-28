@@ -195,7 +195,7 @@ export const projects: Project[] = [
   },
   {
     name: "reld",
-    description: "newlibを標準ライブラリとして静的リンクできるリンカ",
+    description: "Rust製のx86-64向けELFリンカ。newlibに加えてglibcの静的リンクにも対応し、TLSやIFUNCなどを実装。",
     url: "https://github.com/Natsu-B/reld",
     tags: ["Rust", "Linker", "newlib"],
   },
