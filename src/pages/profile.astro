@@ -5,7 +5,9 @@ import { careers, interests, profile, projects, skills, slideDecks } from "../da
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { encodeTag } from "../lib/articles";
 
+const featuredSlideDecks = slideDecks.filter((slide) => slide.featured);
 const latestSlideDecks = [...slideDecks]
+  .filter((slide) => !slide.featured)
   .sort((a, b) => b.date.localeCompare(a.date))
   .slice(0, 3);
 ---
@@ -74,6 +76,35 @@ const latestSlideDecks = [...slideDecks]
       <h2 class="text-xl font-semibold text-slate-800">Slides</h2>
       <a href="/slides/" class="text-sm font-medium">すべてのスライドを見る</a>
     </div>
+    {featuredSlideDecks.length > 0 && (
+      <div class="mt-5 space-y-4">
+        {featuredSlideDecks.map((slide) => (
+          <article class="rounded-xl border border-blue-200 bg-blue-50/50 p-4 sm:p-5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <p class="text-xs font-semibold uppercase tracking-wide text-blue-700">
+                Featured Poster
+              </p>
+              <span class="rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium uppercase text-slate-500">
+                {slide.format}
+              </span>
+            </div>
+            <p class="mt-3 text-xs font-medium tracking-wide text-slate-500">
+              {slide.date}{slide.event ? ` / ${slide.event}` : ""}
+            </p>
+            <h3 class="mt-1 text-lg font-semibold text-slate-800">
+              <a href={`/slides/${slide.slug}/`}>{slide.title}</a>
+            </h3>
+            <p class="mt-3 text-sm leading-7 text-slate-600 sm:text-base">
+              {slide.description}
+            </p>
+            <div class="mt-4 flex flex-wrap gap-3">
+              <a href={`/slides/${slide.slug}/`} class="outline-link">詳細を見る</a>
+              <a href={slide.url} class="outline-link">ポスターを開く (PDF)</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
     <div class="mt-5 space-y-4">
       {
         latestSlideDecks.map((slide) => (
