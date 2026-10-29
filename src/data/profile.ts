@@ -26,6 +26,7 @@ export interface SlideDeck {
   event?: string;
   description: string;
   format: SlideFormat;
+  featured?: boolean;
   url: string;
   embedUrl?: string;
   embedHtml?: string;
@@ -132,6 +133,17 @@ export const slideDecks: SlideDeck[] = [
     tags: ["Rust"],
   },
   */
+  {
+    slug: "sechack365-2025-hyprprobe-poster",
+    title: "HyprProbe: ソフトウェアのみでデバッグを可能にするハイパーバイザ型OSデバッガ",
+    date: "2026-02-28",
+    event: "SecHack365 2025 成果発表会",
+    description: "SecHack365の成果ポスター。追加のデバッグ機材なしで動作するHyprProbeの仕組みやGDB / VS Code連携、メモリアクセス監視、異常IRQ検知、QEMUとRaspberry Pi 4での動作検証を紹介。",
+    format: "pdf",
+    featured: true,
+    url: "https://sechack365.nict.go.jp/achievement/2025/pdf/30Ss.pdf",
+    tags: ["AArch64", "Hypervisor", "HyprProbe", "Debugging", "Raspberry Pi 4"],
+  },
   {
     slug: "raspberry-pi-5-rp1-custom-program",
     title: "Raspberry Pi 5のRP1でも自作プログラムをうごかしたい！",
