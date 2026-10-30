@@ -84,12 +84,13 @@ export const careers: Career[] = [
   {
     period: "2025.10 - 2026.9",
     title: "サイボウズ・ラボユース",
-    summary: "サイボウズ・ラボユースにて、Raspberry Pi 5でのAMPの開発"
+    summary: "Raspberry Pi 5でのAMP構成の開発に取り組み、RP1での独自ファームウェア起動やBCM2712上のLinuxとの連携を調査・実装。その後もrp1-halとして関連開発を継続。",
+    url: "https://github.com/Natsu-B/rp1-hal",
   },
   {
     period: "2024.4 - 2026.8",
     title: "ロケットサークル CREATE（99L）",
-    summary: "99Lの動翼制御系を担当。動翼制御用の統合基板の設計・開発、機体側ソフトウェア、地上側ファームウェアまで一貫して開発。",
+    summary: "99L機の動翼制御系を担当。統合基板の設計から機体側・地上側の組込みソフトウェアまで開発し、ミッション基板ファームウェアは実際の飛行に使用された。",
     url: "https://youtu.be/iyHNUBBM54Y?si=uF9rUiykg44XpC5p",
   },
   {
@@ -192,18 +193,25 @@ export const slideDecks: SlideDeck[] = [
 
 export const projects: Project[] = [
   {
-    name: "aarch64_type1_hypervisor",
+    name: "rp1-hal",
     description:
-      "AArch64向けのType-1 Hypervisor実装 GDBに接続可能なハイパーバイザ型OSデバッガのHyprProbeや、Raspberry Pi 5上で動作するハイパーバイザなどを作成",
-    url: "https://github.com/Natsu-B/aarch64_type1_hypervisor",
-    tags: ["Rust", "AArch64", "Hypervisor", "U-Boot", "Raspberry Pi 5", "HyprProbe"],
+      "Raspberry Pi CM5のRP1内蔵Cortex-M3向けRust HAL・ランタイムを開発。2コア起動、BCM2712側のブートローダー、LinuxとのSCMI・UIO・共有メモリ通信を実装し、実機で動作を確認。",
+    url: "https://github.com/Natsu-B/rp1-hal",
+    tags: ["Rust", "RP1", "Cortex-M3", "AMP", "Linux"],
   },
   {
-    name: "hypervisor",
+    name: "HyprProbe / AArch64 Hypervisor",
     description:
-      "セキュリティキャンプ 2024 全国大会にて作成したハイパーバイザ AArch64 uefi環境向けのType-1 Hypervisor",
-    url: "https://github.com/Natsu-B/hypervisor",
-    tags: ["Rust", "AArch64", "Hypervisor", "UEFI"],
+      "Rust製AArch64 Type-1ハイパーバイザとOSデバッガ「HyprProbe」を開発。GDB / VS Code連携、ブレークポイント・ウォッチポイント、メモリアクセス監視、異常IRQ・例外処理失敗の検知に対応し、QEMUとRaspberry Pi 4で動作を確認。",
+    url: "https://github.com/Natsu-B/aarch64_type1_hypervisor",
+    tags: ["Rust", "AArch64", "Hypervisor", "Debugging", "HyprProbe"],
+  },
+  {
+    name: "C99L Mission Board",
+    description:
+      "ロケットサークルCREATEのC99L機の実飛行に使用したESP32-S3向けミッション基板ファームウェアを開発。離床・頂点判定、動翼制御、パラシュート制御、CAN通信、飛行ログ記録などを実装。",
+    url: "https://github.com/Natsu-B/Avi_99L_MissionBoard",
+    tags: ["C++", "ESP32-S3", "Rocket", "Control"],
   },
   {
     name: "reld",
@@ -214,8 +222,15 @@ export const projects: Project[] = [
   {
     name: "c_compiler",
     description:
-      "プリプロセッサや中間言語を実装したCコンパイラ",
+      "C99の一部に対応するCコンパイラをC言語で実装。プリプロセッサ、構文解析、独自の中間表現、x86-64アセンブリ生成を実装し、自身のソースコードをコンパイルするセルフホストを達成。",
     url: "https://github.com/Natsu-B/c_compiler",
-    tags: ["C", "Compiler"],
+    tags: ["C", "Compiler", "x86-64", "Self-hosting"],
+  },
+  {
+    name: "hypervisor",
+    description:
+      "セキュリティキャンプ 2024 全国大会にて作成したハイパーバイザ AArch64 uefi環境向けのType-1 Hypervisor",
+    url: "https://github.com/Natsu-B/hypervisor",
+    tags: ["Rust", "AArch64", "Hypervisor", "UEFI"],
   },
 ];
